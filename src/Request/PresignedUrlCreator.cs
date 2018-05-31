@@ -53,7 +53,7 @@ namespace Cuiliang.AliyunOssSdk.Request
 
             var method = HttpMethod.ToString().ToUpperInvariant();
 
-            var expire = ((long)DateTime.UtcNow.Subtract(EpicTime).TotalSeconds + 10).ToString(); //UNIX 时间戳
+            var expire = ((long)ExpireTime.Subtract(EpicTime).TotalSeconds).ToString(); //UNIX 时间戳
             
             // 要额外签名的数据
             var headers = new Dictionary<string,string>();
