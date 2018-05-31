@@ -16,6 +16,7 @@ namespace Cuiliang.AliyunOssSdk.Request
     {
         //默认的超时时间
         const int DEFAULT_EXPIRE_SECONDS = 600;
+        private static readonly DateTime EpicTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
         public BucketInfo Bucket { get; set; }
         public string ObjectKey { get; set; }
@@ -51,9 +52,8 @@ namespace Cuiliang.AliyunOssSdk.Request
             Ensure.ToBeTrue(HttpMethod == HttpMethod.Get || HttpMethod == HttpMethod.Put, "不支持的http method"); //只支持这两种
 
             var method = HttpMethod.ToString().ToUpperInvariant();
-            var expire = DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds.ToString(); //UNIX 时间戳
-            
-            
+
+            var expire = ((long)DateTime.UtcNow.Subtract(EpicTime).TotalSeconds + 10).ToString(); //UNIX 时间戳
             
             // 要额外签名的数据
             var headers = new Dictionary<string,string>();
